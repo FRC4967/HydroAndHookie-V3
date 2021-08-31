@@ -55,8 +55,8 @@ public class RobotMap {
 	public static final int BELT_MOTOR_ID = 5;
 	public static final double CLIMBER_MOTOR_SPEED = 1;
 		//intake motors
-	public static final int INTAKEMOTOR1 = 6;
-	public static final int INTAKEMOTOR2 = 8;
+	public static final int INTAKE_MOTOR_HIGH = 6;
+	public static final int INTAKE_MOTOR_LOW = 8;
 		//control panel (not in use)
 	public static final int CONTROL_PANEL_MOTOR = 7;
 

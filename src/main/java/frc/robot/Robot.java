@@ -29,6 +29,9 @@ public class Robot extends TimedRobot {
     m_chooser.setDefaultOption("Default Auto", kDefaultAuto);
     m_chooser.addOption("My Auto", kCustomAuto);
     SmartDashboard.putData("Auto choices", m_chooser);
+
+    Intake.getInstance();
+    
   }
 
   /**
@@ -39,7 +42,10 @@ public class Robot extends TimedRobot {
    * SmartDashboard integrated updating.
    */
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() 
+  {
+    Intake.periodic();
+  }
 
   /**
    * This autonomous (along with the chooser code above) shows how to select between different
