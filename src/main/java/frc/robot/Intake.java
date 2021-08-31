@@ -6,11 +6,13 @@ public class Intake
 {
 
     private static Intake intakeInstance;
+    private static VictorSPX intakeLow;
+    private static VictorSPX intakeHigh;
 
 
     public Intake()
     {
-
+        intakeLow = 
     }
 
     public static Intake getInstance()
