@@ -18,11 +18,12 @@ public class Intake
 
     public Intake()
     {
+        intakeLow = new VictorSPX(RobotMap.INTAKE_MOTOR_LOW);
+        intakeHigh = new VictorSPX(RobotMap.INTAKE_MOTOR_HIGH);
+
         intakeForward = false;
         intakeBackward = false;
         intakeStop = true;
-        intakeLow = new VictorSPX(RobotMap.INTAKE_MOTOR_LOW);
-        intakeHigh = new VictorSPX(RobotMap.INTAKE_MOTOR_HIGH);
     }
 
     public static Intake getInstance()
