@@ -11,19 +11,11 @@ public class Intake
     private static VictorSPX intakeLow;
     private static VictorSPX intakeHigh;
 
-    private static boolean intakeForward;
-    private static boolean intakeBackward;
-    private static boolean intakeStop;
-
 
     public Intake()
     {
         intakeLow = new VictorSPX(RobotMap.INTAKE_MOTOR_LOW);
         intakeHigh = new VictorSPX(RobotMap.INTAKE_MOTOR_HIGH);
-
-        intakeForward = false;
-        intakeBackward = false;
-        intakeStop = true;
     }
 
     public static Intake getInstance()
@@ -35,45 +27,22 @@ public class Intake
         return intakeInstance;
     }
 
-    public static void periodic()
+    public static void start()
     {
-        if (intakeForward)
-        {
-            intakeLow.set(ControlMode.PercentOutput, -.75);
-            intakeHigh.set(ControlMode.PercentOutput, .6);
-        }
-        if (intakeBackward)
-        {
-            intakeLow.set(ControlMode.PercentOutput, .75);
-            intakeHigh.set(ControlMode.PercentOutput, -.6);
-        }
-        if (intakeStop)
-        {
-            intakeLow.set(ControlMode.PercentOutput, 0);
-            intakeHigh.set(ControlMode.PercentOutput, 0);
-        }
-    }
-    
-
-    public static void intakeRunForwards()
-    {
-        intakeStop = false;
-        intakeBackward = false;
-        intakeForward = true;
+        intakeLow.set(ControlMode.PercentOutput, -.75);
+        intakeHigh.set(ControlMode.PercentOutput, .6);
     }
 
-    public static void intakeRunBackwards()
+    public static void reverse()
     {
-        intakeForward = false;
-        intakeStop = false;
-        intakeBackward = true;
+        intakeLow.set(ControlMode.PercentOutput, .75);
+        intakeHigh.set(ControlMode.PercentOutput, -.6);
     }
 
-    public static void stopIntake()
+    public static void stop()
     {
-        intakeBackward = false;
-        intakeForward = false;
-        intakeStop = true;
+        intakeLow.set(ControlMode.PercentOutput, 0);
+        intakeHigh.set(ControlMode.PercentOutput, 0);
     }
 }
 

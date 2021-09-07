@@ -10,26 +10,10 @@ public class Indexer
     private static VictorSPX indexer;
     private static VictorSPX belt;
 
-    private static boolean indexerForward;
-    private static boolean indexerBackward;
-    private static boolean indexerStop;
-
-    private static boolean beltForward;
-    private static boolean beltBackward;
-    private static boolean beltStop;
-
     public Indexer()
     {
         indexer = new VictorSPX(RobotMap.INDEX_MOTOR_ID);
         belt = new VictorSPX(RobotMap.BELT_MOTOR_ID);
-
-        indexerForward = false;
-        indexerBackward = false;
-        indexerStop = true;
-
-        beltForward = false;
-        beltBackward = false;
-        beltStop = true;
     }
 
     public static Indexer getInstance()
@@ -41,79 +25,33 @@ public class Indexer
         return indexerInstance;
     }
 
-    public static void periodic()
+    public static void indexerForward()
     {
-        if (indexerForward)
-        {
-            indexer.set(ControlMode.PercentOutput, 0.3);
-        }
-
-        if (indexerBackward)
-        {
-            indexer.set(ControlMode.PercentOutput, -0.3);
-        }
-        
-        if (indexerStop)
-        {
-            indexer.set(ControlMode.PercentOutput, 0);
-        }
-
-        if (beltForward)
-        {
-            belt.set(ControlMode.PercentOutput, 0.5);
-        }
-
-        if (beltBackward)
-        {
-            belt.set(ControlMode.PercentOutput, -0.5);
-        }
-        
-        if (beltStop)
-        {
-            belt.set(ControlMode.PercentOutput, 0);
-        } 
-        
+        indexer.set(ControlMode.PercentOutput, 0.3);
     }
 
-    public static void indexerRunForwards()
+    public static void indexerBackward()
     {
-        indexerStop = false;
-        indexerBackward = false;
-        indexerForward = true;
-    }
-
-    public static void indexerRunBackwards()
-    {
-        indexerForward = false;
-        indexerStop = false;
-        indexerBackward = true;
+        indexer.set(ControlMode.PercentOutput, -0.3);
     }
 
     public static void indexerStop()
     {
-        indexerForward = false;
-        indexerBackward = false;
-        indexerStop = true;
+        indexer.set(ControlMode.PercentOutput, 0);
     }
 
-    public static void beltRunForwards()
+    public static void beltForward()
     {
-        beltStop = false;
-        beltBackward = false;
-        beltForward = true;
+        belt.set(ControlMode.PercentOutput, 0.5);
     }
 
-    public static void beltRunBackwards()
+    public static void beltBackward()
     {
-        beltForward = false;
-        beltStop = false;
-        beltBackward = true;
+        belt.set(ControlMode.PercentOutput, -0.5);
     }
 
     public static void beltStop()
     {
-        beltForward = false;
-        beltBackward = false;
-        beltStop = true;
+        belt.set(ControlMode.PercentOutput, 0);
     }
 }

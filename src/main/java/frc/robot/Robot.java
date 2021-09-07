@@ -32,6 +32,7 @@ public class Robot extends TimedRobot {
     
     Indexer.getInstance();
     Intake.getInstance();
+    Climber.getInstance();
     
   }
 
@@ -45,8 +46,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() 
   {
-    Indexer.periodic();
-    Intake.periodic();
+    
   }
 
   /**

@@ -53,7 +53,6 @@ public class RobotMap {
 		//delivery motors	
 	public static final int INDEX_MOTOR_ID = 21;
 	public static final int BELT_MOTOR_ID = 5;
-	public static final double CLIMBER_MOTOR_SPEED = 1;
 		//intake motors
 	public static final int INTAKE_MOTOR_HIGH = 6;
 	public static final int INTAKE_MOTOR_LOW = 8;
