@@ -10,7 +10,7 @@ public class Indexer
     private static VictorSPX indexer;
     private static VictorSPX belt;
 
-    public Indexer()
+    private Indexer()
     {
         indexer = new VictorSPX(RobotMap.INDEX_MOTOR_ID);
         belt = new VictorSPX(RobotMap.BELT_MOTOR_ID);

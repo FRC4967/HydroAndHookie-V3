@@ -26,11 +26,11 @@ public class DriveTrain
     private static final double P = 0.001; // CALIBRATE
     private static final double I = 0; // CALIBRATE
     private static final double D = 10; // CALIBRATE
-    private static final double I_ZONE = 0; // CALIBRATE
+    private static final double I_ZONE = 15; // CALIBRATE
 
 
 
-    public DriveTrain()
+    private DriveTrain()
     {
         leftMotor = new CANSparkMax(RobotMap.LEFT_MOTOR_ID, MotorType.kBrushless);
         leftFollower = new CANSparkMax(RobotMap.LEFT_FOLLOWER_ID, MotorType.kBrushless);
@@ -94,9 +94,27 @@ public class DriveTrain
 
     }
 
-    public static void drive(double inches, double speed)
+    public static void drive(double leftPos, double rightPos)
     {
         
     }
+
+
+    public static double getLeftDriveEncoder()
+    {
+        return leftMotorEncoder.getPosition();
+    }
+
+    public static double getRightDriveEncoder()
+    {
+        return rightMotorEncoder.getPosition();
+    }
+
+    public static void resetDriveEncoders()
+    {
+        leftMotorEncoder.setPosition(0);
+        rightMotorEncoder.setPosition(0);
+    }
+
 
 }

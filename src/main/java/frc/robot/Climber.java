@@ -14,17 +14,17 @@ public class Climber
     private static VictorSPX climberS;
     private static VictorSPX climberF;
 
-    private static boolean climberButton;
+    private static boolean failSafe;
 
     private static Climber climberInstance;
 
-    public Climber()
+    private Climber()
     {
         fishingPole = new CANSparkMax(18, MotorType.kBrushed);
         climberS = new VictorSPX(RobotMap.CLIMBER_S_ID);
         climberF = new VictorSPX(RobotMap.CLIMBER_F_ID);
 
-        climberButton = false;
+        failSafe = false;
     }
 
     public static Climber getInstance()
@@ -51,14 +51,9 @@ public class Climber
         fishingPole.set(0);
     }
 
-    public static void climberButtonEngaged()
+    public static void failSafeButton(boolean val)
     {
-        climberButton = true;
-    }
-
-    public static void climberButtonDisengaged()
-    {
-        climberButton = false;
+        failSafe = val;
     }
 
     public static void climberElevate()

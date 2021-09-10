@@ -12,7 +12,7 @@ public class Intake
     private static VictorSPX intakeHigh;
 
 
-    public Intake()
+    private Intake()
     {
         intakeLow = new VictorSPX(RobotMap.INTAKE_MOTOR_LOW);
         intakeHigh = new VictorSPX(RobotMap.INTAKE_MOTOR_HIGH);
