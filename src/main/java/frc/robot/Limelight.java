@@ -24,6 +24,15 @@ public class Limelight
         LookUpTable.getInstance();
     }
 
+    public static Limelight getInstance()
+    {
+        if (limelightInstance == null)
+        {
+            limelightInstance = new Limelight();
+        }
+        return limelightInstance;
+    }
+
     public static double getAngleOffTarget()
     {
         return table.getEntry("tx").getDouble(0);

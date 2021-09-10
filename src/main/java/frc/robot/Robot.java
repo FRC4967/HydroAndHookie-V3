@@ -33,7 +33,9 @@ public class Robot extends TimedRobot {
     Indexer.getInstance();
     Intake.getInstance();
     Climber.getInstance();
-    
+    Shooter.getInstance();
+    Limelight.getInstance();
+    DriveTrain.getInstance();
   }
 
   /**
@@ -86,7 +88,64 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() 
+  {
+    if (ControllerMap.intakeIn())
+    {
+      Intake.start();
+    }
+    else if (ControllerMap.intakeOut())
+    {
+      Intake.reverse();
+    }
+    else
+    {
+      Intake.stop();
+    }
+    if (ControllerMap.indexForward())
+    {
+      Indexer.beltForward();
+      Indexer.indexerForward();
+    }
+    else if (ControllerMap.indexBackward())
+    {
+      Indexer.beltBackward();
+      Indexer.indexerBackward();
+    }
+    else
+    {
+      Indexer.beltStop();
+      Indexer.indexerStop();
+    }
+    if (ControllerMap.startAndStopShooting())
+    {
+      Shooter.startAndStopShooting();
+    }
+    if (ControllerMap.constantShooting())
+    {
+      Shooter.constantShooting();
+    }
+    if (ControllerMap.engageClimberFailSafe() && ControllerMap.fishingPoleUp())
+    {
+      Climber.extendFishPole();
+    }
+    else if (ControllerMap.engageClimberFailSafe() && ControllerMap.fishingPoleDown())
+    {
+      Climber.retractFishPole();
+    }
+    else
+    {
+      Climber.stopFishPole();
+    }
+    if (ControllerMap.reelInClimber())
+    {
+      Climber.climberElevate();
+    }
+    else if (ControllerMap.reelOutClimber())
+    {
+      Climber.climberDescend();
+    }
+  }
 
   /** This function is called once when the robot is disabled. */
   @Override

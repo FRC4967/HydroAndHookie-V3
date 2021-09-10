@@ -24,6 +24,8 @@ public class Shooter
     private static int bottomVelocity;
 
     private static Shooter shooterInstance;
+
+    private static boolean isShooting;
     
     private Shooter()
     {
@@ -45,6 +47,8 @@ public class Shooter
 
         topVelocity = 3500;
         bottomVelocity = 5500;
+
+        isShooting = false;
     }
 
 
@@ -65,14 +69,29 @@ public class Shooter
 
     public static void startShooting()
     {
+        isShooting = true;
         topShooter.getPIDController().setReference(topVelocity, ControlType.kVelocity);
         bottomShooter.getPIDController().setReference(bottomVelocity, ControlType.kVelocity);
     }
 
     public static void stopShooting()
     {
+        isShooting = false;
         topShooter.getPIDController().setReference(0, ControlType.kVelocity);
         bottomShooter.getPIDController().setReference(0, ControlType.kVelocity);
+    }
+
+    public static void startAndStopShooting()
+    {
+        if (!isShooting)
+        {
+            startShooting();
+        }
+        else if (isShooting)
+        {
+            stopShooting();
+        }
+
     }
 
     public static void adjustBottomVelocity(int bottom)
