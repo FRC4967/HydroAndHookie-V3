@@ -1,13 +1,15 @@
 package frc.robot;
 
+import frc.robot.TimerForAutonomous;
+
 public abstract class BaseAutonomous 
 {
 
-    private static TimerForAutonomous timer;
-    private static boolean isRunning;
+    private TimerForAutonomous timer;
+    private boolean isRunning;
 
 
-    private BaseAutonomous()
+    public BaseAutonomous()
     {
         timer = TimerForAutonomous.getInstance();
         isRunning = false;
@@ -15,43 +17,43 @@ public abstract class BaseAutonomous
 
     public abstract void periodic();
 
-    public static void start()
+    public void start()
     {
         timer.setStep(0);
         isRunning = true;
     }
 
-    public static void stop()
+    public void stop()
     {
         isRunning = false;
     }
     
-    public static boolean isRunning()
+    public boolean isRunning()
     {
         return isRunning;
     }
 
-    public static boolean hasCompleted()
+    public boolean hasCompleted()
     {
         return !isRunning;
     }
 
-    public static int getStep()
+    public int getStep()
     {
         return timer.getStep();
     }
 
-    public static void setStep(int desiredStep)
+    public void setStep(int desiredStep)
     {
         timer.setStep(desiredStep);
     }
 
-    public static void advanceStep()
+    public void advanceStep()
     {
         timer.stopTimerAndIncreaseStep();
     }
 
-    public static void setTimerAndAdvanceStep(long milliseconds)
+    public void setTimerAndAdvanceStep(long milliseconds)
     {
         timer.setTimer(milliseconds);
     }

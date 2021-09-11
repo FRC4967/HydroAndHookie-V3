@@ -3,9 +3,9 @@ package frc.robot;
 public class TimerForAutonomous 
 {
     
-    private static int step;
-    private static long endTime;
-    private static boolean timerRunning;
+    private int step;
+    private long endTime;
+    private boolean timerRunning;
 
     private static TimerForAutonomous timerForAutonomousInstance;
 
@@ -23,30 +23,30 @@ public class TimerForAutonomous
         return timerForAutonomousInstance;
     }
 
-    public static void setTimer(long time)
+    public void setTimer(long time)
     {
         endTime = System.currentTimeMillis() + time;
         timerRunning = true;
     }
 
-    public static void setTimerAndIncreaseStep(long time)
+    public void setTimerAndIncreaseStep(long time)
     {
         setTimer(time);
         nextStep();
     }
 
-    public static void stopTimer()
+    public void stopTimer()
     {
         setTimer(1000000); 
     }
 
-    public static void stopTimerAndIncreaseStep()
+    public void stopTimerAndIncreaseStep()
     {
         stopTimer();
         nextStep();
     }
 
-    public static void increaseStepWhenTimerExpired()
+    public void increaseStepWhenTimerExpired()
     {
         if (timeExpired() && timerRunning)
         {
@@ -55,32 +55,32 @@ public class TimerForAutonomous
         }
     }
 
-    public static boolean timeExpired()
+    public boolean timeExpired()
     {
         return endTime < System.currentTimeMillis();
     }
 
-    public static int getStep()
+    public int getStep()
     {
         return step;
     }
 
-    public static void setStep(int theStep)
+    public void setStep(int theStep)
     {
         step = theStep;
     }
 
-    public static void nextStep()
+    public void nextStep()
     {
         step++;
     }
 
-    public static double getMillisecondsLeft()
+    public double getMillisecondsLeft()
     {
         return endTime - System.currentTimeMillis();
     }
 
-    public static double getSecondsLeft()
+    public double getSecondsLeft()
     {
         return (endTime - System.currentTimeMillis()) / 1000;
     }
