@@ -49,8 +49,8 @@ public class DriveTrain
         leftMotor.setSmartCurrentLimit(40);
         rightMotor.setSmartCurrentLimit(40);
 
-        leftMotor.setIdleMode(IdleMode.kCoast);
-        rightMotor.setIdleMode(IdleMode.kCoast);
+        leftMotor.setIdleMode(IdleMode.kBrake);
+        rightMotor.setIdleMode(IdleMode.kBrake);
 
         leftMotorEncoder = leftMotor.getEncoder();
         rightMotorEncoder = rightMotor.getEncoder();
@@ -82,8 +82,8 @@ public class DriveTrain
 
     public static void teleopDrive()
     {
-        leftMotor.setIdleMode(IdleMode.kCoast);
-        rightMotor.setIdleMode(IdleMode.kCoast);
+        leftMotor.setIdleMode(IdleMode.kBrake);
+        rightMotor.setIdleMode(IdleMode.kBrake);
         rightFollower.follow(rightMotor);
         leftFollower.follow(leftMotor);
         leftMotor.setInverted(true);
@@ -91,14 +91,33 @@ public class DriveTrain
 
     public static void turn(double degrees)
     {
-
+        resetDriveEncoders();
+        double arcLength = RobotMap.ROBORADIUS * (Math.toRadians(degrees));
+        drive(arcLength, -arcLength);
     }
 
     public static void drive(double leftPos, double rightPos)
     {
+        leftPos = inchesToTicks(leftPos);
+        rightPos = inchesToTicks(rightPos);
         
+        leftDrivePID.setReference(leftPos, ControlType.kPosition);
+        rightDrivePID.setReference(rightPos, ControlType.kPosition);
     }
 
+    public static double inchesToTicks(double inches)
+    {
+        double inchesToTicks = inches * ((RobotMap.WHEEL_CIRC / (RobotMap.TICKS_PER_REVOLUTION * RobotMap.GEARING_RATIO)));
+        inchesToTicks = Math.round(inchesToTicks);
+
+        return inchesToTicks;
+    }
+
+    public static void driveTeleop(double leftPercentage, double rightPercentage)
+    {
+        leftMotor.set(leftPercentage);
+        rightMotor.set(rightPercentage);
+    }
 
     public static double getLeftDriveEncoder()
     {

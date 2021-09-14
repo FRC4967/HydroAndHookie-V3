@@ -4,26 +4,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class AutoStayStill extends BaseAutonomous
 {
-
-    private static ThreeBallAuto instance;
-    
     public AutoStayStill()
     {
         super();
     }
 
-    public static ThreeBallAuto getInstance()
-    {
-        if (instance == null)
-        {
-            instance = new ThreeBallAuto();
-        }
-        return instance;
-    }
     public void start()
     {
         super.start();
     }
+
     public void stop()
     {
         super.stop();

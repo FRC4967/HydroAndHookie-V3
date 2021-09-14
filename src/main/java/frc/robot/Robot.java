@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Controller;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,6 +24,10 @@ public class Robot extends TimedRobot {
 
   final String threeBallAuto = "3 Ball Auto";
   final String doNothing = "No Movement Auto";
+  final String visionAlign = "Line Robot Up";
+
+  double rightMinSpeed = 0;
+  double leftMinSpeed = 0;
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -80,13 +85,15 @@ public class Robot extends TimedRobot {
     {
       case threeBallAuto:
         baseAutonomous = new ThreeBallAuto();
-        baseAutonomous.start();
         break;
       case doNothing:
         baseAutonomous = new AutoStayStill();
-        baseAutonomous.start();
+        break;
+      case visionAlign:
+        baseAutonomous = new AutoVisionAlign();
         break;
     }
+    baseAutonomous.start();
   }
 
   private void setUpAutoChoices()
@@ -94,6 +101,7 @@ public class Robot extends TimedRobot {
     autoChooser = new SendableChooser<String>();
     autoChooser.setDefaultOption(threeBallAuto, threeBallAuto);
     autoChooser.addOption(doNothing, doNothing);
+    autoChooser.addOption(visionAlign, visionAlign);
     SmartDashboard.putData("Autonoumous Chose:", autoChooser);
   }
 
@@ -121,6 +129,48 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() 
   {
+    // drive base control
+
+    if (Math.abs(ControllerMap.getLeftDriveSpeed()) > 0.1 || Math.abs(ControllerMap.getRightDriveSpeed()) > 0.1)
+    {
+      // makes sure we don't drive in our deadzone
+      if (Math.abs(ControllerMap.getLeftDriveSpeed()) < 0.1)
+      {
+        leftMinSpeed = 0;
+      }
+      if (Math.abs(ControllerMap.getRightDriveSpeed()) < 0.1)
+      {
+        rightMinSpeed = 0;
+      }
+      // make sure that we are never driving at 100% and that max we can go is 90% on the left side
+      if (Math.abs(ControllerMap.getLeftDriveSpeed()) > 0.1)
+      {
+        if (ControllerMap.getLeftDriveSpeed() > 0.1)
+        {
+          leftMinSpeed = ControllerMap.getLeftDriveSpeed() - 0.1;
+        }
+        else if (ControllerMap.getLeftDriveSpeed() < -0.1)
+        {
+          leftMinSpeed = ControllerMap.getLeftDriveSpeed() + 0.1;
+        }
+      }
+      // make sure that we are never driving at 100% and that max we can go is 90% on the right side
+      if (Math.abs(ControllerMap.getRightDriveSpeed()) > 0.1)
+      {
+        if (ControllerMap.getRightDriveSpeed() > 0.1)
+        {
+          rightMinSpeed = ControllerMap.getRightDriveSpeed() - 0.1;
+        }
+        else if (ControllerMap.getRightDriveSpeed() < -0.1)
+        {
+          rightMinSpeed = ControllerMap.getRightDriveSpeed() + 0.1;
+        }
+      }
+      // actually drives after all of the safety nets in place
+      DriveTrain.driveTeleop(leftMinSpeed, rightMinSpeed);
+    }
+
+    // subsystem control
     if (ControllerMap.intakeIn())
     {
       Intake.start();
@@ -188,7 +238,10 @@ public class Robot extends TimedRobot {
 
   /** This function is called once when test mode is enabled. */
   @Override
-  public void testInit() {}
+  public void testInit() 
+  {
+    DriveTrain.teleopDrive();
+  }
 
   /** This function is called periodically during test mode. */
   @Override

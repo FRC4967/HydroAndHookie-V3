@@ -13,9 +13,7 @@ public class TrapezoidalMove
     private static double m_accel, m_decel, m_max_speed, m_distance;
     private static double m_t1, m_t2, m_t3;
 
-    private static TrapezoidalMove trapezoidalMoveInstance;
-
-    private TrapezoidalMove() {
+    public TrapezoidalMove() {
         m_accel = 0.1; // ft/s/s
         m_decel = 0.13; // ft/s/s
         m_max_speed = 0.5; // ft/s
@@ -25,15 +23,6 @@ public class TrapezoidalMove
         m_t3 = -99; // seconds
         // this->CalcParams();
 
-    }
-
-    public static TrapezoidalMove getInstance()
-    {
-        if (trapezoidalMoveInstance == null)
-        {
-            trapezoidalMoveInstance = new TrapezoidalMove();
-        }
-        return trapezoidalMoveInstance;
     }
 
     public static void TrapezoidalMove(double Accel, double Decel, double MaxSpeed, double Distance) 

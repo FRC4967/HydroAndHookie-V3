@@ -53,12 +53,26 @@ public class Limelight
 
     public static double getDistanceAdjustedByAngle (double distance, double angleOff)
     {
-        return (distance + (CAMERA_DISTANCE_FROM_CENTER_OF_ROBOT - ((Math.cos(Math.toRadians(angleOff))) * CAMERA_DISTANCE_FROM_CENTER_OF_ROBOT)));
+        double finalDistance = 0;
+
+        if (angleOff > 0)
+        {
+            finalDistance = (distance - (CAMERA_DISTANCE_FROM_CENTER_OF_ROBOT - ((Math.cos(Math.toRadians(angleOff))) * CAMERA_DISTANCE_FROM_CENTER_OF_ROBOT)));
+        }
+        else if (angleOff < 0)
+        {
+            finalDistance = (distance + (CAMERA_DISTANCE_FROM_CENTER_OF_ROBOT - ((Math.cos(Math.toRadians(angleOff))) * CAMERA_DISTANCE_FROM_CENTER_OF_ROBOT)));
+        }
+        else
+        {
+            finalDistance = distance;
+        }
+        return finalDistance;
     }
 
-    public static int getBottomShooterVelocity()
+    public static int getBottomShooterVelocity(double dist)
     {
-        double distance = getDistanceAdjustedByAngle(getDistanceFromTarget(), getAngleOffTarget());
+        double distance = dist;
         double originalDistance = distance;
         double upperVal = 0;
         double desiredVelocityOne = 1;
@@ -88,4 +102,30 @@ public class Limelight
 
         return (int)finalVelocity;
     }
+
+    public static void turnLedsOn()
+    {
+        table.getEntry("ledMode").setNumber(3);
+    }
+
+    public static void turnLedsOff()
+    {
+        table.getEntry("ledMode").setNumber(1);
+    }
+
+    public static void flashLeds()
+    {
+        table.getEntry("ledMode").setNumber(2);
+    }
+
+    public static boolean isTargetVisible()
+    {
+        return table.getEntry("tv").getDouble(0) > 0;
+    }
+
+    public static boolean isRobotLinedUp()
+    {
+        return (isTargetVisible() && Math.abs(getAngleOffTarget()) <= 1);
+    }
+
 }

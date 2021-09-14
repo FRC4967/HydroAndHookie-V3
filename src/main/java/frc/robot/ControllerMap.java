@@ -17,6 +17,11 @@ public class ControllerMap
     private static boolean climberReelIn = rightJoystick.getRawButton(9);
     private static boolean climberReelOut = rightJoystick.getRawButton(6);
 
+    // primary actual drive controls
+
+    private static double getRightSpeed = rightJoystick.getRawAxis(1);
+    private static double getLeftSpeed = leftJoystick.getRawAxis(1);
+
     // MANIPULATOR CONTROLS
 
     private static boolean indexForward = manipulatorJoystick.getRawButton(5);
@@ -51,6 +56,17 @@ public class ControllerMap
         return climberReelOut;
     }
 
+    // actual drive controls
+
+    public static double getRightDriveSpeed()
+    {
+        return getRightSpeed;
+    }
+
+    public static double getLeftDriveSpeed()
+    {
+        return getLeftSpeed;
+    }
 
     // MANIPULATOR DRIVER
 
