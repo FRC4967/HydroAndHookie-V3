@@ -5,36 +5,60 @@ import edu.wpi.first.wpilibj.Joystick;
 public class ControllerMap 
 {
 
-    public static Joystick leftJoystick  = new Joystick(0);
-    public static Joystick rightJoystick = new Joystick(1);
+    public Joystick leftJoystick;
+    public Joystick rightJoystick;
 
-    private static Joystick manipulatorJoystick = new Joystick(2);
+    private Joystick manipulatorJoystick;
 
     // PRIMARY DRIVER CONTROLS
 
-    private static boolean intakeRunIn = rightJoystick.getRawButton(1);
-    private static boolean intakeRunOut = leftJoystick.getRawButton(1);
-    private static boolean climberReelIn = rightJoystick.getRawButton(9);
-    private static boolean climberReelOut = rightJoystick.getRawButton(6);
+    private boolean intakeRunIn;
+    private boolean intakeRunOut;
+    private boolean climberReelIn;
+    private boolean climberReelOut;
 
     // primary actual drive controls
 
-    private static double getRightSpeed = rightJoystick.getRawAxis(1);
-    private static double getLeftSpeed = leftJoystick.getRawAxis(1);
+    private double getRightSpeed;
+    private double getLeftSpeed;
 
     // MANIPULATOR CONTROLS
 
-    private static boolean indexForward = manipulatorJoystick.getRawButton(5);
-    private static boolean indexBackwards = manipulatorJoystick.getRawButton(3);
-    private static boolean constantShooting = manipulatorJoystick.getRawButton(12);
-    private static boolean startAndStopShooting = manipulatorJoystick.getRawButton(1);
-    private static boolean engageClimberFailSafe = manipulatorJoystick.getRawButton(11);
-    private static boolean raiseClimberHook = manipulatorJoystick.getRawButton(7);
-    private static boolean climberHookDown = manipulatorJoystick.getRawButton(9);
+    private boolean indexForward;
+    private boolean indexBackwards;
+    private boolean constantShooting;
+    private boolean startAndStopShooting;
+    private boolean engageClimberFailSafe;
+    private boolean raiseClimberHook;
+    private boolean climberHookDown;
+
+    public ControllerMap()
+    {
+        leftJoystick  = new Joystick(0);
+        rightJoystick = new Joystick(1);
+
+        manipulatorJoystick = new Joystick(2);
+
+        intakeRunIn = rightJoystick.getRawButton(1);
+        intakeRunOut = leftJoystick.getRawButton(1);
+        climberReelIn = rightJoystick.getRawButton(9);
+        climberReelOut = rightJoystick.getRawButton(6);
+
+        getRightSpeed = rightJoystick.getRawAxis(1);
+        getLeftSpeed = leftJoystick.getRawAxis(1);
+
+        indexForward = manipulatorJoystick.getRawButton(5);
+        indexBackwards = manipulatorJoystick.getRawButton(3);
+        constantShooting = manipulatorJoystick.getRawButton(12);
+        startAndStopShooting = manipulatorJoystick.getRawButton(1);
+        engageClimberFailSafe = manipulatorJoystick.getRawButton(11);
+        raiseClimberHook = manipulatorJoystick.getRawButton(7);
+        climberHookDown = manipulatorJoystick.getRawButton(9);
+    }
 
     // periodic
 
-    public static void periodic()
+    public void periodic()
     {
         intakeRunIn = rightJoystick.getRawButton(1);
         intakeRunOut = leftJoystick.getRawButton(1);
@@ -57,71 +81,71 @@ public class ControllerMap
 
     // PRIMARY DRIVER
 
-    public static boolean intakeIn()
+    public boolean intakeIn()
     {
         return intakeRunIn;
     }
 
-    public static boolean intakeOut()
+    public boolean intakeOut()
     {
         return intakeRunOut;
     }
 
-    public static boolean reelInClimber()
+    public boolean reelInClimber()
     {
         return climberReelIn;
     }
 
-    public static boolean reelOutClimber()
+    public boolean reelOutClimber()
     {
         return climberReelOut;
     }
 
     // actual drive controls
 
-    public static double getRightDriveSpeed()
+    public double getRightDriveSpeed()
     {
         return getRightSpeed;
     }
 
-    public static double getLeftDriveSpeed()
+    public double getLeftDriveSpeed()
     {
         return getLeftSpeed;
     }
 
     // MANIPULATOR DRIVER
 
-    public static boolean indexForward()
+    public boolean indexForward()
     {
         return indexForward;
     }
 
-    public static boolean indexBackward()
+    public boolean indexBackward()
     {
         return indexBackwards;
     }
 
-    public static boolean constantShooting()
+    public boolean constantShooting()
     {
         return constantShooting;
     }
 
-    public static boolean startAndStopShooting()
+    public boolean startAndStopShooting()
     {
         return startAndStopShooting;
     }
 
-    public static boolean engageClimberFailSafe()
+    public boolean engageClimberFailSafe()
     {
         return engageClimberFailSafe;
     }
 
-    public static boolean fishingPoleUp()
+    public boolean fishingPoleUp()
     {
         return raiseClimberHook;
     }
 
-    public static boolean fishingPoleDown()
+    public boolean fishingPoleDown()
     {
         return climberHookDown;
     }

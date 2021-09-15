@@ -29,12 +29,16 @@ public class Robot extends TimedRobot {
   double rightMinSpeed = 0;
   double leftMinSpeed = 0;
 
+  ControllerMap controller;
+
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
    */
   @Override
   public void robotInit() {
+
+    controller = new ControllerMap();
 
     Indexer.getInstance();
     Intake.getInstance();
@@ -132,9 +136,9 @@ public class Robot extends TimedRobot {
   {
     // drive base control
 
-    leftMinSpeed = ControllerMap.leftJoystick.getRawAxis(1);
-    rightMinSpeed = ControllerMap.rightJoystick.getRawAxis(1);
-    ControllerMap.periodic();
+    leftMinSpeed = controller.leftJoystick.getRawAxis(1);
+    rightMinSpeed = controller.rightJoystick.getRawAxis(1);
+    controller.periodic();
 
     SmartDashboard.putNumber("left side", leftMinSpeed);
     SmartDashboard.putNumber("right side", rightMinSpeed);
@@ -179,11 +183,11 @@ public class Robot extends TimedRobot {
     // }
 
     // subsystem control
-    if (ControllerMap.intakeIn())
+    if (controller.intakeIn())
     {
       Intake.start();
     }
-    else if (ControllerMap.intakeOut())
+    else if (controller.intakeOut())
     {
       Intake.reverse();
     }
@@ -191,12 +195,12 @@ public class Robot extends TimedRobot {
     {
       Intake.stop();
     }
-    if (ControllerMap.indexForward())
+    if (controller.indexForward())
     {
       Indexer.beltForward();
       Indexer.indexerForward();
     }
-    else if (ControllerMap.indexBackward())
+    else if (controller.indexBackward())
     {
       Indexer.beltBackward();
       Indexer.indexerBackward();
@@ -206,19 +210,19 @@ public class Robot extends TimedRobot {
       Indexer.beltStop();
       Indexer.indexerStop();
     }
-    if (ControllerMap.startAndStopShooting())
+    if (controller.startAndStopShooting())
     {
       Shooter.startAndStopShooting();
     }
-    if (ControllerMap.constantShooting())
+    if (controller.constantShooting())
     {
       Shooter.constantShooting();
     }
-    if (ControllerMap.engageClimberFailSafe() && ControllerMap.fishingPoleUp())
+    if (controller.engageClimberFailSafe() && controller.fishingPoleUp())
     {
       Climber.extendFishPole();
     }
-    else if (ControllerMap.engageClimberFailSafe() && ControllerMap.fishingPoleDown())
+    else if (controller.engageClimberFailSafe() && controller.fishingPoleDown())
     {
       Climber.retractFishPole();
     }
@@ -226,11 +230,11 @@ public class Robot extends TimedRobot {
     {
       Climber.stopFishPole();
     }
-    if (ControllerMap.reelInClimber())
+    if (controller.reelInClimber())
     {
       Climber.climberElevate();
     }
-    else if (ControllerMap.reelOutClimber())
+    else if (controller.reelOutClimber())
     {
       Climber.climberDescend();
     }
