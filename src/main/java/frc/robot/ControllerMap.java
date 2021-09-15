@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj.Joystick;
 public class ControllerMap 
 {
 
-    private static Joystick leftJoystick  = new Joystick(0);
-    private static Joystick rightJoystick = new Joystick(1);
+    public static Joystick leftJoystick  = new Joystick(0);
+    public static Joystick rightJoystick = new Joystick(1);
 
     private static Joystick manipulatorJoystick = new Joystick(2);
 
@@ -31,6 +31,27 @@ public class ControllerMap
     private static boolean engageClimberFailSafe = manipulatorJoystick.getRawButton(11);
     private static boolean raiseClimberHook = manipulatorJoystick.getRawButton(7);
     private static boolean climberHookDown = manipulatorJoystick.getRawButton(9);
+
+    // periodic
+
+    public static void periodic()
+    {
+        intakeRunIn = rightJoystick.getRawButton(1);
+        intakeRunOut = leftJoystick.getRawButton(1);
+        climberReelIn = rightJoystick.getRawButton(9);
+        climberReelOut = rightJoystick.getRawButton(6);
+
+        getRightSpeed = rightJoystick.getRawAxis(1);
+        getLeftSpeed = leftJoystick.getRawAxis(1);
+
+        indexForward = manipulatorJoystick.getRawButton(5);
+        indexBackwards = manipulatorJoystick.getRawButton(3);
+        constantShooting = manipulatorJoystick.getRawButton(12);
+        startAndStopShooting = manipulatorJoystick.getRawButton(1);
+        engageClimberFailSafe = manipulatorJoystick.getRawButton(11);
+        raiseClimberHook = manipulatorJoystick.getRawButton(7);
+        climberHookDown = manipulatorJoystick.getRawButton(9);
+    }
 
     // FUNCTIONS TO RETREIVE BUTTONS
 

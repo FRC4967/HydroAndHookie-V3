@@ -115,6 +115,8 @@ public class DriveTrain
 
     public static void driveTeleop(double leftPercentage, double rightPercentage)
     {
+        System.out.println(leftPercentage);
+        System.out.println(rightPercentage);
         leftMotor.set(leftPercentage);
         rightMotor.set(rightPercentage);
     }

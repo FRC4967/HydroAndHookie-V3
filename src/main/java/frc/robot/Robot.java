@@ -119,6 +119,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit()
   {
+    DriveTrain.teleopDrive();
     baseAutonomous.stop();
     Intake.stop();
     Indexer.indexerStop();
@@ -131,44 +132,51 @@ public class Robot extends TimedRobot {
   {
     // drive base control
 
-    if (Math.abs(ControllerMap.getLeftDriveSpeed()) > 0.1 || Math.abs(ControllerMap.getRightDriveSpeed()) > 0.1)
+    leftMinSpeed = ControllerMap.leftJoystick.getRawAxis(1);
+    rightMinSpeed = ControllerMap.rightJoystick.getRawAxis(1);
+    ControllerMap.periodic();
+
+    SmartDashboard.putNumber("left side", leftMinSpeed);
+    SmartDashboard.putNumber("right side", rightMinSpeed);
+
+    if (Math.abs(leftMinSpeed) > 0.1 || Math.abs(rightMinSpeed) > 0.1)
     {
       // makes sure we don't drive in our deadzone
-      if (Math.abs(ControllerMap.getLeftDriveSpeed()) < 0.1)
-      {
-        leftMinSpeed = 0;
-      }
-      if (Math.abs(ControllerMap.getRightDriveSpeed()) < 0.1)
-      {
-        rightMinSpeed = 0;
-      }
-      // make sure that we are never driving at 100% and that max we can go is 90% on the left side
-      if (Math.abs(ControllerMap.getLeftDriveSpeed()) > 0.1)
-      {
-        if (ControllerMap.getLeftDriveSpeed() > 0.1)
-        {
-          leftMinSpeed = ControllerMap.getLeftDriveSpeed() - 0.1;
-        }
-        else if (ControllerMap.getLeftDriveSpeed() < -0.1)
-        {
-          leftMinSpeed = ControllerMap.getLeftDriveSpeed() + 0.1;
-        }
-      }
-      // make sure that we are never driving at 100% and that max we can go is 90% on the right side
-      if (Math.abs(ControllerMap.getRightDriveSpeed()) > 0.1)
-      {
-        if (ControllerMap.getRightDriveSpeed() > 0.1)
-        {
-          rightMinSpeed = ControllerMap.getRightDriveSpeed() - 0.1;
-        }
-        else if (ControllerMap.getRightDriveSpeed() < -0.1)
-        {
-          rightMinSpeed = ControllerMap.getRightDriveSpeed() + 0.1;
-        }
-      }
+      // if (Math.abs(leftMinSpeed) < 0.1)
+      // {
+      //   leftMinSpeed = 0;
+      // }
+      // if (Math.abs(rightMinSpeed) < 0.1)
+      // {
+      //   rightMinSpeed = 0;
+      // }
+      // // make sure that we are never driving at 100% and that max we can go is 90% on the left side
+      // if (Math.abs(leftMinSpeed) > 0.1)
+      // {
+      //   if (leftMinSpeed > 0.1)
+      //   {
+      //     leftMinSpeed = leftMinSpeed - 0.1;
+      //   }
+      //   else if (leftMinSpeed < -0.1)
+      //   {
+      //     leftMinSpeed = leftMinSpeed + 0.1;
+      //   }
+      // }
+      // // make sure that we are never driving at 100% and that max we can go is 90% on the right side
+      // if (Math.abs(rightMinSpeed) > 0.1)
+      // {
+      //   if (rightMinSpeed > 0.1)
+      //   {
+      //     rightMinSpeed = rightMinSpeed - 0.1;
+      //   }
+      //   else if (rightMinSpeed < -0.1)
+      //   {
+      //     rightMinSpeed = rightMinSpeed + 0.1;
+      //   }
+      // }
       // actually drives after all of the safety nets in place
       DriveTrain.driveTeleop(leftMinSpeed, rightMinSpeed);
-    }
+    // }
 
     // subsystem control
     if (ControllerMap.intakeIn())
@@ -227,6 +235,7 @@ public class Robot extends TimedRobot {
       Climber.climberDescend();
     }
   }
+  }
 
   /** This function is called once when the robot is disabled. */
   @Override
@@ -240,7 +249,6 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() 
   {
-    DriveTrain.teleopDrive();
   }
 
   /** This function is called periodically during test mode. */
