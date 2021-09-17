@@ -44,16 +44,20 @@ public class AutoVisionAlign extends BaseAutonomous
                     Limelight.turnLedsOn();
                     distanceFromTarget = Limelight.getDistanceFromTarget();
                     angleOffTarget = Limelight.getAngleOffTarget();
-                    distanceFromTarget = Limelight.getDistanceAdjustedByAngle(distanceFromTarget, angleOffTarget);
+                    // distanceFromTarget = Limelight.getDistanceAdjustedByAngle(distanceFromTarget, angleOffTarget);
                     advanceStep();
                     break;
                 case 1:
-                    Shooter.adjustBottomVelocity(Limelight.getBottomShooterVelocity(distanceFromTarget));
-                    Shooter.startShooting();
+                    // Shooter.adjustBottomVelocity(Limelight.getBottomShooterVelocity(distanceFromTarget));
+                    // Shooter.startShooting();
                     advanceStep();
                     break;
                 case 2:
                     DriveTrain.turn(angleOffTarget);
+                    System.out.println("turn");
+                    advanceStep();
+                    break;
+                case 3:
                     if (Limelight.isRobotLinedUp())
                     {
                         Limelight.flashLeds();
@@ -61,10 +65,10 @@ public class AutoVisionAlign extends BaseAutonomous
                         advanceStep();
                     }
                     break;
-                case 3:
-                    if (timer.get() > 0.25)
+                case 4:
+                    if (timer.get() > 1)
                     {
-                        Limelight.turnLedsOff();
+                        // Limelight.turnLedsOff();
                         stop();
                     }
                     break;

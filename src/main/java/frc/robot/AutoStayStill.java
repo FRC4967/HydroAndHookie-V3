@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+
 public class AutoStayStill extends BaseAutonomous
 {
     public AutoStayStill()
@@ -29,10 +30,11 @@ public class AutoStayStill extends BaseAutonomous
             switch(getStep())
             {
                 case 0:
-                    advanceStep();
+                    DriveTrain.drive(20, 20);
+                    // advanceStep();
                     break;
                 case 1:
-                    stop();
+                    setStep(0);
                     break;
             }
         }

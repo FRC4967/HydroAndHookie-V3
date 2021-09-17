@@ -18,15 +18,15 @@ public class DriveTrain
     private static CANEncoder rightMotorEncoder;
     private static CANEncoder leftMotorEncoder;
 
-    private static CANPIDController rightDrivePID;
-    private static CANPIDController leftDrivePID;
+    public static CANPIDController rightDrivePID;
+    public static CANPIDController leftDrivePID;
 
     private static DriveTrain driveTrainInstance;
 
-    private static final double P = 0.001; // CALIBRATE
-    private static final double I = 0; // CALIBRATE
-    private static final double D = 10; // CALIBRATE
-    private static final double I_ZONE = 15; // CALIBRATE
+    public static  double P = 0.05; // CALIBRATE
+    public static  double I = 0.005; // CALIBRATE
+    public static  double D = 0; // CALIBRATE
+    public static  double I_ZONE = 1; // CALIBRATE
 
 
 
@@ -69,6 +69,9 @@ public class DriveTrain
         rightDrivePID.setD(D);
         rightDrivePID.setIZone(I_ZONE);
         rightDrivePID.setFF(0);
+
+        
+        leftMotor.setInverted(true);
     }
 
     public static DriveTrain getInstance()
@@ -93,7 +96,8 @@ public class DriveTrain
     {
         resetDriveEncoders();
         double arcLength = RobotMap.ROBORADIUS * (Math.toRadians(degrees));
-        drive(arcLength, -arcLength);
+        System.out.println(arcLength);
+        drive(-arcLength, arcLength);
     }
 
     public static void drive(double leftPos, double rightPos)
@@ -107,22 +111,27 @@ public class DriveTrain
 
     public static double inchesToTicks(double inches)
     {
-        double inchesToTicks = inches * ((RobotMap.WHEEL_CIRC / (RobotMap.TICKS_PER_REVOLUTION * RobotMap.GEARING_RATIO)));
+        double inchesToTicks = inches * (((RobotMap.TICKS_PER_REVOLUTION * RobotMap.GEARING_RATIO) / RobotMap.WHEEL_CIRC));
         inchesToTicks = Math.round(inchesToTicks);
 
         return inchesToTicks;
     }
 
+    public static double ticksToInches(double ticks)
+    {
+        double ticksToInches = ticks / (((RobotMap.TICKS_PER_REVOLUTION * RobotMap.GEARING_RATIO) / RobotMap.WHEEL_CIRC));
+        return ticksToInches;
+    }
+
     public static void driveTeleop(double leftPercentage, double rightPercentage)
     {
-        System.out.println(leftPercentage);
-        System.out.println(rightPercentage);
         leftMotor.set(leftPercentage);
         rightMotor.set(rightPercentage);
     }
 
     public static double getLeftDriveEncoder()
     {
+        
         return leftMotorEncoder.getPosition();
     }
 

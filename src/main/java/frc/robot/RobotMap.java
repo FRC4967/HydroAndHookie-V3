@@ -32,7 +32,7 @@ public class RobotMap {
 	public static final double ROBOT_BASE_WIDTH = 25.5; //inches
 	public static final double ROBORADIUS = ROBOT_BASE_WIDTH/2;
 	public static final double WHEEL_CIRC = 6 * Math.PI; //inches (Diameter * Pi)
-	public static final double TICKS_PER_REVOLUTION = 42;
+	public static final double TICKS_PER_REVOLUTION = 1;  // TODO FIX THIS
 	public static final double GEARING_RATIO = 10.75;
 	public static final int SHOOTER_ONE = 10;
 	public static final int CONTROL_PANEL_BUTTON = 1;

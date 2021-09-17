@@ -42,7 +42,7 @@ public class Indexer
 
     public static void beltForward()
     {
-        belt.set(ControlMode.PercentOutput, 0.5);
+        belt.set(ControlMode.PercentOutput, 0.8);
     }
 
     public static void beltBackward()

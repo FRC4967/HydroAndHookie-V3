@@ -35,6 +35,7 @@ public class Limelight
 
     public static double getAngleOffTarget()
     {
+        System.out.println(table.getEntry("tx").getDouble(0));
         return table.getEntry("tx").getDouble(0);
     }
 

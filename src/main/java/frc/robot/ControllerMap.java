@@ -50,7 +50,7 @@ public class ControllerMap
         indexForward = manipulatorJoystick.getRawButton(5);
         indexBackwards = manipulatorJoystick.getRawButton(3);
         constantShooting = manipulatorJoystick.getRawButton(12);
-        startAndStopShooting = manipulatorJoystick.getRawButton(1);
+        startAndStopShooting = manipulatorJoystick.getRawButtonPressed(1);
         engageClimberFailSafe = manipulatorJoystick.getRawButton(11);
         raiseClimberHook = manipulatorJoystick.getRawButton(7);
         climberHookDown = manipulatorJoystick.getRawButton(9);
@@ -71,10 +71,11 @@ public class ControllerMap
         indexForward = manipulatorJoystick.getRawButton(5);
         indexBackwards = manipulatorJoystick.getRawButton(3);
         constantShooting = manipulatorJoystick.getRawButton(12);
-        startAndStopShooting = manipulatorJoystick.getRawButton(1);
+        startAndStopShooting = manipulatorJoystick.getRawButtonPressed(1);
         engageClimberFailSafe = manipulatorJoystick.getRawButton(11);
         raiseClimberHook = manipulatorJoystick.getRawButton(7);
         climberHookDown = manipulatorJoystick.getRawButton(9);
+        // System.out.println(intakeRunIn);
     }
 
     // FUNCTIONS TO RETREIVE BUTTONS
@@ -83,6 +84,7 @@ public class ControllerMap
 
     public boolean intakeIn()
     {
+        System.out.println(intakeRunIn);
         return intakeRunIn;
     }
 

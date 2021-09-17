@@ -78,6 +78,18 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() 
   {
+  DriveTrain.P = SmartDashboard.getNumber("P", 0);
+  DriveTrain.D = SmartDashboard.getNumber("D", 0);
+
+  // System.out.println(DriveTrain.P);
+  // System.out.println(DriveTrain.D);
+
+  DriveTrain.leftDrivePID.setP(DriveTrain.P);
+  DriveTrain.rightDrivePID.setP(DriveTrain.P);
+  DriveTrain.leftDrivePID.setD(DriveTrain.D);
+  DriveTrain.rightDrivePID.setD(DriveTrain.D);
+    
+    DriveTrain.resetDriveEncoders();
     baseAutonomous.stop();
 
     autoSelected = (String) autoChooser.getSelected();
@@ -113,6 +125,21 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() 
   {
+
+    
+    DriveTrain.P = SmartDashboard.getNumber("P", 0);
+    DriveTrain.D = SmartDashboard.getNumber("D", 0);
+
+    // System.out.println(DriveTrain.P);
+    // System.out.println(DriveTrain.D);
+
+    DriveTrain.leftDrivePID.setP(DriveTrain.P);
+    DriveTrain.rightDrivePID.setP(DriveTrain.P);
+    DriveTrain.leftDrivePID.setD(DriveTrain.D);
+    DriveTrain.rightDrivePID.setD(DriveTrain.D);
+
+    SmartDashboard.putNumber("Left encoder inches", DriveTrain.ticksToInches(DriveTrain.getLeftDriveEncoder()));
+    SmartDashboard.putNumber("Right encoder inches", DriveTrain.ticksToInches(DriveTrain.getRightDriveEncoder()));
     if (baseAutonomous.isRunning())
     {
       baseAutonomous.periodic();
@@ -123,7 +150,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit()
   {
+    SmartDashboard.putNumber("P", DriveTrain.P);
+    SmartDashboard.putNumber("D", DriveTrain.D);
     DriveTrain.teleopDrive();
+    DriveTrain.resetDriveEncoders();
     baseAutonomous.stop();
     Intake.stop();
     Indexer.indexerStop();
@@ -136,6 +166,12 @@ public class Robot extends TimedRobot {
   {
     // drive base control
 
+    DriveTrain.P = SmartDashboard.getNumber("P", 0);
+    DriveTrain.D = SmartDashboard.getNumber("D", 0);
+
+    SmartDashboard.putNumber("Left encoder inches", DriveTrain.ticksToInches(DriveTrain.getLeftDriveEncoder()));
+    SmartDashboard.putNumber("Right encoder inches", DriveTrain.ticksToInches(DriveTrain.getRightDriveEncoder()));
+
     leftMinSpeed = controller.leftJoystick.getRawAxis(1);
     rightMinSpeed = controller.rightJoystick.getRawAxis(1);
     controller.periodic();
@@ -146,45 +182,47 @@ public class Robot extends TimedRobot {
     if (Math.abs(leftMinSpeed) > 0.1 || Math.abs(rightMinSpeed) > 0.1)
     {
       // makes sure we don't drive in our deadzone
-      // if (Math.abs(leftMinSpeed) < 0.1)
-      // {
-      //   leftMinSpeed = 0;
-      // }
-      // if (Math.abs(rightMinSpeed) < 0.1)
-      // {
-      //   rightMinSpeed = 0;
-      // }
-      // // make sure that we are never driving at 100% and that max we can go is 90% on the left side
-      // if (Math.abs(leftMinSpeed) > 0.1)
-      // {
-      //   if (leftMinSpeed > 0.1)
-      //   {
-      //     leftMinSpeed = leftMinSpeed - 0.1;
-      //   }
-      //   else if (leftMinSpeed < -0.1)
-      //   {
-      //     leftMinSpeed = leftMinSpeed + 0.1;
-      //   }
-      // }
-      // // make sure that we are never driving at 100% and that max we can go is 90% on the right side
-      // if (Math.abs(rightMinSpeed) > 0.1)
-      // {
-      //   if (rightMinSpeed > 0.1)
-      //   {
-      //     rightMinSpeed = rightMinSpeed - 0.1;
-      //   }
-      //   else if (rightMinSpeed < -0.1)
-      //   {
-      //     rightMinSpeed = rightMinSpeed + 0.1;
-      //   }
-      // }
+      if (Math.abs(leftMinSpeed) < 0.1)
+      {
+        leftMinSpeed = 0;
+      }
+      if (Math.abs(rightMinSpeed) < 0.1)
+      {
+        rightMinSpeed = 0;
+      }
+      // make sure that we are never driving at 100% and that max we can go is 90% on the left side
+      if (Math.abs(leftMinSpeed) > 0.1)
+      {
+        if (leftMinSpeed > 0.1)
+        {
+          leftMinSpeed = leftMinSpeed - 0.1;
+        }
+        else if (leftMinSpeed < -0.1)
+        {
+          leftMinSpeed = leftMinSpeed + 0.1;
+        }
+      }
+      // make sure that we are never driving at 100% and that max we can go is 90% on the right side
+      if (Math.abs(rightMinSpeed) > 0.1)
+      {
+        if (rightMinSpeed > 0.1)
+        {
+          rightMinSpeed = rightMinSpeed - 0.1;
+        }
+        else if (rightMinSpeed < -0.1)
+        {
+          rightMinSpeed = rightMinSpeed + 0.1;
+        }
+      }
       // actually drives after all of the safety nets in place
       DriveTrain.driveTeleop(leftMinSpeed, rightMinSpeed);
-    // }
+     }
 
     // subsystem control
+    // System.out.println("aidan");
     if (controller.intakeIn())
     {
+      // System.out.println("intake");
       Intake.start();
     }
     else if (controller.intakeOut())
@@ -239,11 +277,13 @@ public class Robot extends TimedRobot {
       Climber.climberDescend();
     }
   }
-  }
+  
 
   /** This function is called once when the robot is disabled. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    Limelight.turnLedsOff();
+  }
 
   /** This function is called periodically when disabled. */
   @Override

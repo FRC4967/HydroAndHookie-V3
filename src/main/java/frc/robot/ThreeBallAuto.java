@@ -53,33 +53,34 @@ public class ThreeBallAuto extends BaseAutonomous
                     // stop and reset timer
                     timer.stop();
                     timer.reset();
-                    // Vision line up and starting the shooter
-                    autoVisionAlign.start();
-                    if (Limelight.isRobotLinedUp())
-                    {
-                        advanceStep();
-                    }
+                    setStep(3);
+                //     // Vision line up and starting the shooter
+                //     autoVisionAlign.start();
+                //     if (Limelight.isRobotLinedUp())
+                //     {
+                //         advanceStep();
+                //     }
                     break;
-                case 1:
-                    // indexer start
-                    Indexer.beltForward();
-                    Indexer.indexerForward();
-                    // timer start
-                    timer.start();
-                    advanceStep();
-                    break;
-                case 2:
-                    // if the timer is greater than 3 seconds, we are assumming all balls are out
-                    // we then proceed to stop everything
-                    if (timer.get() > 3)
-                    {
-                        timer.stop();
-                        Indexer.beltStop();
-                        Indexer.indexerStop();
-                        Shooter.stopShooting();
-                        advanceStep();
-                    }
-                    break;
+                // case 1:
+                //     // indexer start
+                //     Indexer.beltForward();
+                //     Indexer.indexerForward();
+                //     // timer start
+                //     timer.start();
+                //     advanceStep();
+                //     break;
+                // case 2:
+                //     // if the timer is greater than 3 seconds, we are assumming all balls are out
+                //     // we then proceed to stop everything
+                //     if (timer.get() > 3)
+                //     {
+                //         timer.stop();
+                //         Indexer.beltStop();
+                //         Indexer.indexerStop();
+                //         Shooter.stopShooting();
+                //         advanceStep();
+                //     }
+                //     break;
                 case 3:
                     // set up trap move
                     TrapezoidalMove.SetAll(15, 15, 30, 40);
