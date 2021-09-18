@@ -256,11 +256,11 @@ public class Robot extends TimedRobot {
     {
       Shooter.constantShooting();
     }
-    if (controller.engageClimberFailSafe() && controller.fishingPoleUp())
+    if (controller.engageClimberFailSafe())
     {
       Climber.extendFishPole();
     }
-    else if (controller.engageClimberFailSafe() && controller.fishingPoleDown())
+    else if (controller.fishingPoleDown())
     {
       Climber.retractFishPole();
     }
@@ -270,11 +270,15 @@ public class Robot extends TimedRobot {
     }
     if (controller.reelInClimber())
     {
-      Climber.climberElevate();
+      Climber.climberDescend();
     }
     else if (controller.reelOutClimber())
     {
-      Climber.climberDescend();
+      Climber.climberElevate();
+    }
+    else if(controller.rightJoystick.getRawButtonPressed(8)){
+
+      Climber.climberStop();
     }
   }
   
